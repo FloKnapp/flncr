@@ -2,6 +2,8 @@
 
 namespace Faulancer\Http;
 
+use Faulancer\Exception\InvalidRequestException;
+
 /**
  * Class Request
  *
@@ -34,17 +36,18 @@ class Request implements RequestInterface
 
     /**
      * Create request object automatically
+     *
+     * @throws InvalidRequestException
      */
     public function create()
     {
-
-        var_dump($_SERVER);
+        if (php_sapi_name() === 'cli') {
+            throw new InvalidRequestException('Request::create() cannot be called within the console.');
+        }
 
         $this->protocol = $_SERVER['SERVER_PROTOCOL'];
-        $this->headers  = headers_list();
-
-        $this->method = $_SERVER['REQUEST_METHOD'];
-        $this->path   = $_SERVER['REQUEST_URI'];
+        $this->method   = $_SERVER['REQUEST_METHOD'];
+        $this->path     = $_SERVER['REQUEST_URI'];
     }
 
     /**

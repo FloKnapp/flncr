@@ -12,4 +12,12 @@ use PHPUnit\Framework\TestCase;
 class RouterTest extends TestCase
 {
 
+    /**
+     * @test
+     */
+    public function canReadRoutes()
+    {
+        self::assertTrue(true);
+    }
+
 }
